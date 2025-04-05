@@ -4,7 +4,8 @@ import PaginaBase from "../paginas/PaginaBase"
 
 
 const Rotas = () => {
-    return (<Routes>
+    return (
+    <Routes>
       <Route path='/' element={<PaginaBase />}>
         <Route path='/' element={<Home />} />
       </Route>

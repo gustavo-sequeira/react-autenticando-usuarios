@@ -23,17 +23,19 @@ const ModalLogin = ({ aberta, aoFechar} : PropsModalCandastro) => {
             email,
             senha
         }
-        console.log(usuario)
 
         axios.post('http://localhost:8000/public/login', usuario)
-            .then(() => {
-                alert('Usuário logado!')
-                setEmail('')
-                setSenha('')
-                aoFechar()
+            .then(resposta => {
+               sessionStorage.setItem('token', resposta.data.access_token)
+               setEmail('')
+               setSenha('')
             })
-            .catch(() => {
-                alert('ops, deu algo errado')
+            .catch(erro => {
+                if(erro?.response?.data?.message){
+                    alert(erro.response.data.message)
+                } else {
+                    alert('Aconteceu algo inesperado ao efetuar o seu login')
+                }
             })
     }
 
