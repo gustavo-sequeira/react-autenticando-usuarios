@@ -8,9 +8,10 @@ import './ModalLogin.css'
 interface PropsModalCandastro {
     aberta: boolean
     aoFechar: () => void
+    aoEfetuarLogin: () => void
 }
 
-const ModalLogin = ({ aberta, aoFechar} : PropsModalCandastro) => {
+const ModalLogin = ({ aberta, aoFechar, aoEfetuarLogin} : PropsModalCandastro) => {
 
 
     const [email, setEmail] = useState('')
@@ -29,6 +30,8 @@ const ModalLogin = ({ aberta, aoFechar} : PropsModalCandastro) => {
                sessionStorage.setItem('token', resposta.data.access_token)
                setEmail('')
                setSenha('')
+               aoFechar()
+               aoEfetuarLogin()
             })
             .catch(erro => {
                 if(erro?.response?.data?.message){
@@ -42,7 +45,7 @@ const ModalLogin = ({ aberta, aoFechar} : PropsModalCandastro) => {
     return (<AbModal 
         titulo="Login" 
         aberta={aberta}
-        aoFechar={aoFechar}    
+        aoFechar={aoFechar}  
     >
         <section className="corpoModalCadastro">
             <figure>
