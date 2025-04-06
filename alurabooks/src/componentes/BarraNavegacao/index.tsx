@@ -84,7 +84,7 @@ const BarraNavegacao = () => {
             {usuarioEstaLogado &&
                 <>
                     <li>
-                        <Link to='/minha-conta/pedidos'>Minha Conta</Link>
+                        <Link to='/minha-conta'>Minha Conta</Link>
                     </li>
                 </>
             }
