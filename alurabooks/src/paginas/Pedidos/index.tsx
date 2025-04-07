@@ -1,108 +1,49 @@
 import { AbBotao } from "ds-alurabooks"
 import axios from 'axios'
-import './Pedidos.css'  
-import { useEffect } from "react"
+import './Pedidos.css'
+import { useEffect, useState } from "react"
 import { IPedido } from "../../interfaces/IPedido"
 
 const Pedidos = () => {
 
+    const formatador = Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' })
+
+    const [pedidos, setPedidos] = useState<IPedido[]>([])
+
     useEffect(() => {
 
-        const token = sessionStorage.getItem('token') 
+        const token = sessionStorage.getItem('token')
 
         axios.get<IPedido[]>('http://localhost:8000/pedidos', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resposta => console.log(resposta.data))
-        .catch(erro => console.log(erro))
+        }).then(resposta => setPedidos(resposta.data))
+            .catch(erro => console.log(erro))
     }, [])
 
     return (
         <section className="pedidos">
             <h1>Meus pedidos</h1>
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
+            {pedidos.map(pedido => 
+                    (<div className="pedido" key={pedido.id}>
+                        <ul>
+                            <li>Pedido: <strong>{pedido.id}</strong></li>
 
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
+                            <li>Data do pedido: <strong> {new Date(pedido.data).toLocaleDateString()} </strong></li>
 
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
+                            <li>Valor total: <strong>
+                                                    { formatador.format(pedido.total)}
+                                            </strong></li>
 
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
+                            <li>Entrega realizada em:: <strong> {new Date(pedido.entrega).toLocaleDateString()} </strong></li>
+                        </ul>
 
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
-
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
-
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
-
-                <AbBotao texto="Detalhes" />
-            </div >
-            <div className="pedido">
-                <ul>
-                    <li>Pedido: <strong>12345</strong></li>
-                    <li>Data do pedido: <strong>12/09/2025</strong></li>
-                    <li>Valor total: <strong>R$ 42.00</strong></li>
-                    <li>Entrega realizada em:: <strong>15/09/2025</strong></li>
-                </ul>
-
-                <AbBotao texto="Detalhes" />
-            </div >
-            
-    </section >) 
+                        <AbBotao texto="Detalhes" />
+                    </div >)
+                )
+            }
+        </section >)
 }
 
 export default Pedidos
