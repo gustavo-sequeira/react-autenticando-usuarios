@@ -12,19 +12,14 @@ const Pedidos = () => {
 
     useEffect(() => {
 
-        const token = sessionStorage.getItem('token')
-
-        http.get<IPedido[]>('/pedidos', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(resposta => setPedidos(resposta.data))
+        http.get<IPedido[]>('pedidos')
+            .then(resposta => setPedidos(resposta.data))
             .catch(erro => console.log(erro))
     }, [])
 
     const excluir = (pedido: IPedido) => {
         const token = sessionStorage.getItem('token')
-        http.delete('/pedidos/' + pedido.id, {
+        http.delete('pedidos/' + pedido.id, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

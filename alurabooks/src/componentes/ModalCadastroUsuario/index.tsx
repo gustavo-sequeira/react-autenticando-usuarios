@@ -31,7 +31,7 @@ const ModalCadastroUsuario = ({ aberta, aoFechar} : PropsModalCandastro) => {
         }
         console.log(usuario)
 
-        http.post('/public/registrar', usuario)
+        http.post('public/registrar', usuario)
             .then(() => {
                 alert('Usuário foi cadastrado com sucesso!')
                 setNome('')

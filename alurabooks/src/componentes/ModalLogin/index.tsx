@@ -24,7 +24,7 @@ const ModalLogin = ({ aberta, aoFechar, aoEfetuarLogin} : PropsModalCandastro) =
             senha
         }
 
-        http.post('/public/login', usuario)
+        http.post('public/login', usuario)
             .then(resposta => {
                sessionStorage.setItem('token', resposta.data.access_token)
                setEmail('')
